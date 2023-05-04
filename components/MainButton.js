@@ -20,7 +20,7 @@ const MainButton = ({ children }) => {
 
 export default MainButton;
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
   buttonOuterContainer: {
     borderRadius: 28,
     margin: 4,

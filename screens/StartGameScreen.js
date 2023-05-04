@@ -24,7 +24,7 @@ const StartGameScreen = () => {
 
 export default StartGameScreen;
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
   screen: {
     justifyContent: "center",
     alignItems: "center",

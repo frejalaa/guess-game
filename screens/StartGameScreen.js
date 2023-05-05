@@ -1,8 +1,11 @@
-import { TextInput, View, StyleSheet, Alert } from "react-native";
+import { TextInput, View, StyleSheet, Alert, Text } from "react-native";
 import { useState } from "react";
 
 import MainButton from "../components/ui/MainButton";
+import Title from "../components/ui/Title";
 import Colors from "../constants/colors";
+import Card from "../components/ui/Card";
+import InstructionText from "../components/ui/InstructionText";
 
 const StartGameScreen = ({ onPickNumber }) => {
   const [enteredNumber, setEnteredNumber] = useState("");
@@ -30,23 +33,27 @@ const StartGameScreen = ({ onPickNumber }) => {
   };
 
   return (
-    <View style={styles.screen}>
-      <TextInput
-        value={enteredNumber}
-        onChangeText={numberInputHandler}
-        style={styles.textInput}
-        maxLength={2}
-        keyboardType="number-pad"
-        inputType="number"
-      />
-      <View style={styles.buttonsContainer}>
-        <View style={styles.buttonContainer}>
-          <MainButton onPress={resetInputHandler}>Reset</MainButton>
+    <View style={styles.rootContainer}>
+      <Title>Start a New Game!</Title>
+      <Card>
+        <InstructionText>Enter a number</InstructionText>
+        <TextInput
+          value={enteredNumber}
+          onChangeText={numberInputHandler}
+          style={styles.textInput}
+          maxLength={2}
+          keyboardType="number-pad"
+          inputType="number"
+        />
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <MainButton onPress={resetInputHandler}>Reset</MainButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <MainButton onPress={confirmInputHandler}>Confirm</MainButton>
+          </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <MainButton onPress={confirmInputHandler}>Confirm</MainButton>
-        </View>
-      </View>
+      </Card>
     </View>
   );
 };
@@ -54,20 +61,10 @@ const StartGameScreen = ({ onPickNumber }) => {
 export default StartGameScreen;
 
 const styles = StyleSheet.create({
-  screen: {
-    justifyContent: "center",
-    alignItems: "center",
+  rootContainer: {
+    flex: 1,
     marginTop: 100,
-    marginHorizontal: 24,
-    padding: 16,
-    backgroundColor: Colors.primary800,
-    borderRadius: 8,
-    // works on android only
-    elevation: 2,
-    // works on ios only
-    // shadowColor: "black",
-    // shadowOffset: { width: 0, height: 2 },
-    // shadowRadius: 6,
+    alignItems: "center",
   },
   textInput: {
     height: 50,

@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import MainButton from "../components/MainButton";
 
-const StartGameScreen = () => {
+const StartGameScreen = ({ onPickNumber }) => {
   const [enteredNumber, setEnteredNumber] = useState("");
 
   const numberInputHandler = (inputText) => {
@@ -20,6 +20,8 @@ const StartGameScreen = () => {
       ]);
       return;
     }
+
+    onPickNumber(chosenNumber);
   };
 
   const resetInputHandler = () => {

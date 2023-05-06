@@ -11,10 +11,12 @@ import Colors from "./constants/colors";
 
 SplashScreen.preventAutoHideAsync();
 
+let guessedNumbers = [];
+
 export default function App() {
   const [userNumber, setUserNumber] = useState();
   const [gameOver, setGameOver] = useState(false);
-  
+
   const [fontsLoaded] = useFonts({
     "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
     "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
@@ -34,8 +36,14 @@ export default function App() {
 
   let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />;
 
-  const changeScreen = () => {
+  const changeScreen = (guessedNumbersList) => {
+    guessedNumbers = guessedNumbersList;
     setGameOver(true);
+  };
+
+  const restartGame = () => {
+    setGameOver(false);
+    setUserNumber(null);
   };
 
   if (userNumber) {
@@ -45,7 +53,12 @@ export default function App() {
   }
 
   if (gameOver) {
-    screen = <GameOverScreen />;
+    screen = (
+      <GameOverScreen
+        onRestartGame={restartGame}
+        guessedNumbers={guessedNumbers}
+      />
+    );
   }
 
   return (

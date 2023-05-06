@@ -19,12 +19,18 @@ const GameScreen = ({ pickedNumber, onChangeScreen }) => {
   const initialGuess = generateRandomBetween(1, 99);
 
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
+  const [guesses, setGuesses] = useState([initialGuess]);
 
   useEffect(() => {
     if (currentGuess === pickedNumber) {
-      onChangeScreen();
+      onChangeScreen(guesses);
     }
   }, [currentGuess]);
+
+  useEffect(() => {
+    currentLow = 1;
+    currentHigh = 99;
+  }, []);
 
   const nextGuessHandler = (direction) => {
     if (
@@ -48,6 +54,7 @@ const GameScreen = ({ pickedNumber, onChangeScreen }) => {
 
     const nextNumber = generateRandomBetween(currentLow, currentHigh);
     setCurrentGuess(nextNumber);
+    setGuesses((currentGuesses) => [...currentGuesses, nextNumber]);
   };
 
   return (
@@ -55,7 +62,9 @@ const GameScreen = ({ pickedNumber, onChangeScreen }) => {
       <Title>Opponent's Guess</Title>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card>
-        <InstructionText style={styles.instructionText}>Higher or lower?</InstructionText>
+        <InstructionText style={styles.instructionText}>
+          Higher or lower?
+        </InstructionText>
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
             <MainButton onPress={nextGuessHandler.bind(this, "lower")}>
@@ -83,7 +92,7 @@ const styles = StyleSheet.create({
   },
   instructionText: {
     marginBottom: 16,
-  },  
+  },
   buttonsContainer: {
     flexDirection: "row",
   },

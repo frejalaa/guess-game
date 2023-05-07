@@ -4,6 +4,8 @@ import {
   StyleSheet,
   Alert,
   useWindowDimensions,
+  KeyboardAvoidingView,
+  ScrollView,
 } from "react-native";
 import { useState } from "react";
 
@@ -43,28 +45,35 @@ const StartGameScreen = ({ onPickNumber }) => {
   const marginTopDistance = height < 600 ? 30 : 100;
 
   return (
-    <View style={[styles.rootContainer, { marginTop: marginTopDistance }]}>
-      <Title>Start a New Game!</Title>
-      <Card>
-        <InstructionText>Enter a number</InstructionText>
-        <TextInput
-          value={enteredNumber}
-          onChangeText={numberInputHandler}
-          style={styles.textInput}
-          maxLength={2}
-          keyboardType="number-pad"
-          inputType="number"
-        />
-        <View style={styles.buttonsContainer}>
-          <View style={styles.buttonContainer}>
-            <MainButton onPress={resetInputHandler}>Reset</MainButton>
-          </View>
-          <View style={styles.buttonContainer}>
-            <MainButton onPress={confirmInputHandler}>Confirm</MainButton>
-          </View>
+    <ScrollView style={styles.rootContainer}>
+      <KeyboardAvoidingView
+        style={[styles.rootContainer]}
+        behavior="padding"
+      >
+        <View style={[styles.rootContainer, { marginTop: marginTopDistance }]}>
+          <Title>Start a New Game!</Title>
+          <Card>
+            <InstructionText>Enter a number</InstructionText>
+            <TextInput
+              value={enteredNumber}
+              onChangeText={numberInputHandler}
+              style={styles.textInput}
+              maxLength={2}
+              keyboardType="number-pad"
+              inputType="number"
+            />
+            <View style={styles.buttonsContainer}>
+              <View style={styles.buttonContainer}>
+                <MainButton onPress={resetInputHandler}>Reset</MainButton>
+              </View>
+              <View style={styles.buttonContainer}>
+                <MainButton onPress={confirmInputHandler}>Confirm</MainButton>
+              </View>
+            </View>
+          </Card>
         </View>
-      </Card>
-    </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
@@ -73,8 +82,8 @@ export default StartGameScreen;
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    marginTop: 100,
-    alignItems: "center",
+    // marginTop: 100,
+    // alignItems: "center",
   },
   textInput: {
     height: 50,

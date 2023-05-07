@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet, Alert, FlatList, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import Title from "../components/ui/Title";
@@ -7,6 +7,7 @@ import NumberContainer from "../components/game/NumberContainer";
 import MainButton from "../components/ui/MainButton";
 import Card from "../components/ui/Card";
 import InstructionText from "../components/ui/InstructionText";
+import GuessLogNumber from "../components/game/GuessLogNumber";
 
 const generateRandomBetween = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -23,7 +24,7 @@ const GameScreen = ({ pickedNumber, onChangeScreen }) => {
 
   useEffect(() => {
     if (currentGuess === pickedNumber) {
-      onChangeScreen(guesses);
+      onChangeScreen(guesses.reverse());
     }
   }, [currentGuess]);
 
@@ -54,7 +55,8 @@ const GameScreen = ({ pickedNumber, onChangeScreen }) => {
 
     const nextNumber = generateRandomBetween(currentLow, currentHigh);
     setCurrentGuess(nextNumber);
-    setGuesses((currentGuesses) => [...currentGuesses, nextNumber]);
+    setGuesses((currentGuesses) => [nextNumber, ...currentGuesses]);
+    console.log("guesses: ", guesses);
   };
 
   return (
@@ -78,7 +80,20 @@ const GameScreen = ({ pickedNumber, onChangeScreen }) => {
           </View>
         </View>
       </Card>
-      <View></View>
+      <View style={styles.listContainer}>
+        <FlatList
+          data={guesses}
+          renderItem={(itemData) => {
+            return (
+              <GuessLogNumber
+                roundNumber={guesses.length - itemData.index}
+                number={itemData.item}
+              />
+            );
+          }}
+          keyExtractor={(item) => item}
+        />
+      </View>
     </View>
   );
 };
@@ -99,4 +114,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
   },
+  listContainer: {
+    flex: 1,
+  }
 });

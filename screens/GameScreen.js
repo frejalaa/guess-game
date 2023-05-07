@@ -64,7 +64,6 @@ const GameScreen = ({ pickedNumber, onChangeScreen }) => {
     const nextNumber = generateRandomBetween(currentLow, currentHigh);
     setCurrentGuess(nextNumber);
     setGuesses((currentGuesses) => [nextNumber, ...currentGuesses]);
-    console.log("guesses: ", guesses);
   };
 
   let screen = (
@@ -142,10 +141,10 @@ export default GameScreen;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    padding: 24,
+    padding: 12,
   },
   instructionText: {
-    marginBottom: 16,
+    marginBottom: 12,
   },
   buttonsContainer: {
     flexDirection: "row",
